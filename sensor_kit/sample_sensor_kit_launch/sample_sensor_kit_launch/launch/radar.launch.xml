@@ -1,0 +1,31 @@
+<launch>
+  <arg name="radar_topic" default="/objects_raw"/>
+  <arg name="filtered_tracks" default="/filtered_tracks"/>
+  <arg name="radar_detected_objects" default="/sensing/radar/detected_objects"/>
+  <arg name="radar_tracked_objects" default="/radar_tracked_objects"/>
+
+  <!-- Parameter -->
+  <arg name="velocity_y_threshold" default="7.0"/>
+  <arg name="update_rate_hz" default="20.0"/>
+  <arg name="use_twist_compensation" default="false"/>
+
+  <group>
+    <push-ros-namespace namespace="radar"/>
+
+    <include file="$(find-pkg-share radar_tracks_noise_filter)/launch/radar_tracks_noise_filter.launch.xml">
+      <arg name="input/tracks" value="$(var radar_topic)"/>
+      <arg name="output/noise_tracks" value="/radar/noise_tracks"/>
+      <arg name="output/filtered_tracks" value="$(var filtered_tracks)"/>
+      <arg name="velocity_y_threshold" value="$(var velocity_y_threshold)"/>
+    </include>
+
+    <include file="$(find-pkg-share radar_tracks_msgs_converter)/launch/radar_tracks_msgs_converter.launch.xml">
+      <arg name="input/radar_objects" value="$(var filtered_tracks)"/>
+      <arg name="input/odometry" value="/localization/kinematic_state"/>
+      <arg name="output/radar_detected_objects" value="$(var radar_detected_objects)"/>
+      <arg name="output/radar_tracked_objects" value="$(var radar_tracked_objects)"/>
+      <arg name="update_rate_hz" value="$(var update_rate_hz)"/>
+      <arg name="use_twist_compensation" value="$(var use_twist_compensation)"/>
+    </include>
+  </group>
+</launch>
