@@ -1,22 +1,22 @@
 <launch>
-  <arg name="launch_driver" default="true"/>
+  <arg name="launch_driver" default="false"/> <!-- SHY_250618, true-->
   <arg name="gnss_receiver" default="ublox" description="ublox(default) or septentrio"/>
 
   <group>
     <push-ros-namespace namespace="gnss"/>
 
     <!-- Switch topic name -->
-    <let name="navsatfix_topic_name" value="ublox/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='ublox'&quot;)"/>
+    <let name="navsatfix_topic_name" value="/novatel/oem7/fix" if="$(eval &quot;'$(var gnss_receiver)'=='ublox'&quot;)"/> <!-- SHY_250618, ublox/nav_sat_fix-->
     <let name="navsatfix_topic_name" value="septentrio/nav_sat_fix" if="$(eval &quot;'$(var gnss_receiver)'=='septentrio'&quot;)"/>
     <let name="orientation_topic_name" value="/autoware_orientation"/>
 
     <!-- Ublox Driver -->
-    <group if="$(eval &quot;'$(var gnss_receiver)'=='ublox'&quot;)">
+    <!-- <group if="$(eval &quot;'$(var gnss_receiver)'=='ublox'&quot;)">
       <node pkg="ublox_gps" name="ublox" exec="ublox_gps_node" if="$(var launch_driver)" respawn="true" respawn_delay="1.0">
         <remap from="~/fix" to="~/nav_sat_fix"/>
         <param from="$(find-pkg-share ublox_gps)/c94_f9p_rover.yaml"/>
       </node>
-    </group>
+    </group> -->
 
     <!-- Septentrio GNSS Driver -->
     <group if="$(eval &quot;'$(var launch_driver)' and '$(var gnss_receiver)'=='septentrio'&quot;)">
