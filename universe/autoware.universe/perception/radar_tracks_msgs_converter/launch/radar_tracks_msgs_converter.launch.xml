@@ -1,8 +1,8 @@
 <launch>
-  <arg name="input/radar_objects" default="input/radar_objects"/>
+  <arg name="input/radar_objects" default="/filtered_tracks"/>
   <arg name="input/odometry" default="/localization/kinematic_state"/>
-  <arg name="output/radar_detected_objects" default="output/radar_detected_objects"/>
-  <arg name="output/radar_tracked_objects" default="output/radar_tracked_objects"/>
+  <arg name="output/radar_detected_objects" default="/sensing/radar/detected_objects"/>
+  <arg name="output/radar_tracked_objects" default="/radar_tracked_objects"/>
   <arg name="update_rate_hz" default="20.0"/>
   <arg name="use_twist_compensation" default="false"/>
 

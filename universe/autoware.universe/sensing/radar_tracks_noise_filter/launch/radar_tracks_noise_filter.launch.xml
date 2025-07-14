@@ -1,9 +1,9 @@
 <launch>
   <!-- Input -->
-  <arg name="input/tracks" default="~/input/tracks"/>
+  <arg name="input/tracks" default="/objects_raw"/>
   <!-- Output -->
   <arg name="output/noise_tracks" default="~/output/noise_tracks"/>
-  <arg name="output/filtered_tracks" default="~/output/filtered_tracks"/>
+  <arg name="output/filtered_tracks" default="/filtered_tracks"/>
   <!-- Parameter -->
   <arg name="velocity_y_threshold" default="7.0"/>
 
